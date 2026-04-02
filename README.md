@@ -1,124 +1,89 @@
-# 🚗 AutoValuate — Car Price Prediction
+# AutoValuate — Vehicle Price Prediction Dashboard
 
-> Know your car's true worth. An AI-powered used car price estimator trained on 8,000+ real Indian vehicle transactions.
-
-![Python](https://img.shields.io/badge/Python-3.13-blue) ![Sklearn](https://img.shields.io/badge/Scikit--learn-RandomForest-green) ![R2](https://img.shields.io/badge/R²%20Score-98.28%25-brightgreen) ![Flask](https://img.shields.io/badge/Backend-Flask-orange)
-
----
-
-## 🎯 Problem Statement
-
-The Indian used car market lacks pricing transparency. Buyers overpay. Sellers undersell. AutoValuate bridges that gap using machine learning — giving anyone an instant, data-backed price estimate.
-
----
-
-## 🚀 Live Demo
-
-Input your car's specs → Get an instant AI price estimate with a confidence range and feature importance breakdown.
-
----
-
-## 📊 Model Performance
-
-| Model | R² Score | MAE (₹) | RMSE (₹) |
-|---|---|---|---|
-| **Random Forest** ✅ | **0.9828** | **65,204** | **1,09,288** |
-| Decision Tree | 0.9655 | 89,391 | 1,54,897 |
-| Linear Regression | 0.6939 | 2,70,328 | 4,61,311 |
-
-Random Forest was selected as the final model with **98.28% accuracy** on unseen test data.
-
----
-
-## 🛠️ Tech Stack
-
-| Layer | Technology |
-|---|---|
-| Language | Python 3.13 |
-| ML Library | Scikit-learn |
-| Model | Random Forest Regressor (100 estimators) |
-| Data Processing | Pandas, NumPy |
-| Serialization | Pickle |
-| Backend | Flask |
-| Frontend | HTML, CSS, JavaScript |
-
----
-
-## 📋 Input Features
-
-The model uses 10 vehicle parameters:
-
-- Year of Manufacture
-- Kilometres Driven
-- Engine Power (bhp)
-- Engine Displacement (CC)
-- Fuel Efficiency (kmpl)
-- Seating Capacity
-- Fuel Type (Petrol / Diesel / CNG)
-- Transmission (Manual / Automatic)
-- Owner History (1st / 2nd / 3rd owner)
-- Seller Type (Individual / Dealer)
-
----
-
-## 💡 Key Features of the Web App
-
-- ⚡ Instant price prediction with min/max range
-- 📊 "What Drives the Price?" — live feature importance chart
-- 🎯 AI Confidence indicator (High / Medium / Low)
-- 📱 Clean, responsive UI built from scratch
+A professional Flask web dashboard that predicts used vehicle prices using a Random Forest ML model trained on 8,000+ Indian vehicle transactions.
 
 ---
 
 ## 🗂️ Project Structure
 
 ```
-AutoValuate/
-├── Price_Prediction.ipynb   # Full ML pipeline (EDA → Training → Evaluation)
-├── app.py                   # Flask web application
-├── model.pkl                # Trained Random Forest model
-├── encoders.pkl             # Label encoders for categorical features
+vehicle_dashboard/
+│
+├── app.py                  # Flask backend (routes + prediction logic)
+├── model.pkl               # Trained Random Forest model
+├── encoders.pkl            # Label encoders for categorical features
+├── requirements.txt        # Python dependencies
+├── Vehicle.csv             # Dataset (place in this folder)
+│
 ├── templates/
-│   └── index.html           # Frontend UI
-└── README.md
+│   └── index.html          # Main dashboard HTML
+│
+└── static/
+    ├── css/
+    │   └── style.css       # Dashboard stylesheet
+    └── js/
+        └── app.js          # Frontend JS (form handling, API calls)
 ```
 
 ---
 
-## ⚙️ Setup & Run Locally
+## ⚙️ Setup & Run
 
+### Step 1: Install dependencies
 ```bash
-# Clone the repo
-git clone https://github.com/yourusername/autovaluate.git
-cd autovaluate
+pip install -r requirements.txt
+```
 
-# Install dependencies
-pip install flask scikit-learn pandas numpy
+### Step 2: Place Dataset
+Put `Vehicle.csv` in the same folder as `app.py`.
 
-# Run the app
+### Step 3: Train the model (first time only)
+The `model.pkl` and `encoders.pkl` are already included.
+If you want to retrain from scratch, run:
+```bash
+python train_model.py
+```
+
+### Step 4: Start the Flask server
+```bash
 python app.py
 ```
 
-Open `http://localhost:5000` in your browser.
+### Step 5: Open your browser
+```
+http://localhost:5000
+```
 
 ---
 
-## 📈 Model Training Pipeline
+## 🔢 Input Features
 
-1. Data loading & inspection (8,128 records)
-2. Data cleaning — handling nulls, unit parsing (kmpl, bhp, CC)
-3. Label encoding for categorical variables
-4. Train/test split (80/20)
-5. Model comparison — Linear Regression, Decision Tree, Random Forest
-6. Final model serialization with Pickle
-7. Flask integration for real-time inference
+| Feature           | Type     | Range / Options                                   |
+|-------------------|----------|---------------------------------------------------|
+| Year              | Number   | 1994 – 2020                                       |
+| KM Driven         | Number   | 1 – 475,000 km                                    |
+| Engine Power      | Number   | 32 – 280 bhp                                      |
+| Engine CC         | Number   | 624 – 3604 CC                                     |
+| Fuel Efficiency   | Number   | 0 – 33.44 kmpl                                    |
+| Seats             | Select   | 2, 4, 5, 6, 7, 8, 9                               |
+| Fuel Type         | Select   | Petrol, Diesel, CNG, LPG                          |
+| Transmission      | Select   | Manual, Automatic                                 |
+| Owner History     | Select   | First / Second / Third / Fourth+ / Test Drive     |
+| Seller Type       | Select   | Individual, Dealer, Trustmark Dealer              |
 
 ---
 
-## 🙋 Author
+## 🏆 Model Performance
 
-Built with ❤️ by Shivvraj Yadav · LinkedIn:https://www.linkedin.com/in/shivraj-yadav-sy2323/ ·
+- **Algorithm**: Random Forest Regressor (100 trees, max_depth=12)
+- **R² Score**: ~96%+
+- **Top Features**: Engine Power (69%), Year (17%), KM Driven (6%)
 
 ---
 
-*Trained on real Indian vehicle transaction data. For educational and informational purposes.*
+## 🛠️ Tech Stack
+
+- **Backend**: Python, Flask
+- **ML**: scikit-learn (Random Forest)
+- **Frontend**: HTML5, CSS3, Vanilla JavaScript
+- **Fonts**: Syne (display), DM Sans (body)
